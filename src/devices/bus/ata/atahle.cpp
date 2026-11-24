@@ -401,9 +401,9 @@ void ata_hle_device::write_data(uint16_t data)
 void ata_hle_device::update_irq()
 {
 	if (device_selected() && (m_device_control & IDE_DEVICE_CONTROL_NIEN) == 0)
-		m_irq_handler(m_irq);
+		device_ata_interface::set_irq(m_irq);
 	else
-		m_irq_handler(CLEAR_LINE);
+		device_ata_interface::set_irq(CLEAR_LINE);
 }
 
 void ata_hle_device::set_irq(int state)
@@ -422,7 +422,7 @@ void ata_hle_device::set_dmarq(int state)
 	{
 		m_dmarq = state;
 
-		m_dmarq_handler(state);
+		device_ata_interface::set_dmarq(state);
 	}
 }
 
@@ -432,7 +432,7 @@ void ata_hle_device::set_dasp(int state)
 	{
 		m_daspout = state;
 
-		m_dasp_handler(state);
+		device_ata_interface::set_dasp(state);
 	}
 }
 
@@ -442,7 +442,7 @@ void ata_hle_device::set_pdiag(int state)
 	{
 		m_pdiagout = state;
 
-		m_pdiag_handler(state);
+		device_ata_interface::set_pdiag(state);
 	}
 }
 
